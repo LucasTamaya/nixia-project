@@ -2,17 +2,51 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+const session = require("express-session");
+const MongoDBSession = require("connect-mongodb-session")(session);
 
 const mongoDbConnection = require("./src/config/mongoDbConnection");
+const connexionRoute = require("./src/routes/connexionRoute");
+const PORT = process.env.PORT || 4000;
+
+const store = new MongoDBSession({
+  uri: process.env.MONGODB_URI,
+  collection: "sessions",
+});
+
+module.exports = store;
 
 const app = express();
 
-app.use(cors());
 app.use(express.json());
 
-const PORT = process.env.PORT || 4000;
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+    cookie: {
+      httpOnly: true,
+      maxAge: 3000000,
+    },
+  })
+);
 
 mongoDbConnection();
+
+app.get("/", (req, res) => {
+  return res.json({ message: "Hello world" });
+});
+
+app.use(connexionRoute);
 
 app.listen(PORT, () => {
   console.log("server is running on port", PORT);
