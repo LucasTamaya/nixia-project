@@ -2,13 +2,13 @@ const User = require("../models/User");
 const passwordValidation = require("../helpers/passwordValidation");
 
 const ConnexionController = async (req, res) => {
-  const { id_number, password } = req.body;
+  const { username, password } = req.body;
 
-  const user = await User.find({ id_number: id_number });
+  const user = await User.find({ username });
 
   if (user.length === 0) {
-    console.log("numéro id invalide");
-    return res.json({ errorMessage: "Numéro d'identifiant invalide" });
+    console.log("nom utilisateur invalide");
+    return res.json({ errorMessage: "Nom d'utilisateur invalide" });
   }
 
   // test pour vérifier si le mot de passe correspond
@@ -19,11 +19,22 @@ const ConnexionController = async (req, res) => {
     return res.json({ errorMessage: "Mot de passe invalide" });
   }
 
-  req.session.isAuth = true;
+  if (user[0].role === "Director") {
+    req.session.director = true;
+  }
 
-  console.log(req.session);
+  if (user[0].role === "Admin") {
+    req.session.admin = true;
+  }
 
-  return res.json({ successMessage: "Connexion réussie" });
+  if (user[0].role === "Employee") {
+    req.session.employee = true;
+  }
+
+  // console.log(user);
+  // console.log(req.session);
+
+  return res.json({ successMessage: "Connexion réussie", role: user[0].role });
 };
 
 module.exports = ConnexionController;

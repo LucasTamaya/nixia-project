@@ -3,39 +3,31 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import connexionValidationSchema from "../../helpers/connexionValidationSchema";
-import apiEndpoint from "../../helpers/apiEndpoint";
 import SmallLoader from "../Loaders/SmallLoader/SmallLoader";
 import ErrorMessage from "../StatusMessage/ErrorMessage";
 import SuccessMessage from "../StatusMessage/SuccessMessage";
-import useConnexion from "../../Hooks/useConnexion";
 
-function Connexion() {
+function CreateAccountForm({ role, createAccount, loading, error, data }) {
   const { control, handleSubmit } = useForm({
     resolver: yupResolver(connexionValidationSchema),
   });
 
-  const { connexion, loading, error, data } = useConnexion(
-    `${apiEndpoint}connexion`
-  );
-
-  const handleConnexion = ({ username, password }) => {
-    connexion(username, password);
+  const handleCreateAccount = ({ username, password }) => {
+    createAccount(username, password);
   };
 
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center gap-y-10 sm:flex-row">
+    <div className="w-full h-screen flex flex-col justify-center items-center gap-y-20">
       {error && <ErrorMessage message={error} />}
 
       {data && <SuccessMessage message={data} />}
 
-      <img
-        src="https://www.nixia.fr/wp-content/uploads/elementor/thumbs/logo_nixia-400x100-1-p833370v8u49zzpup3gv4phknz01bxtfmhibdzi9k8.png"
-        alt="nixia system logo"
-        className="w-[300px]"
-      />
+      <h2 className="font-bold text-4xl text-red-600 text-center">
+        Créer un compte {role}
+      </h2>
 
       <form
-        onSubmit={handleSubmit(handleConnexion)}
+        onSubmit={handleSubmit(handleCreateAccount)}
         className="flex flex-col w-full max-w-[250px] gap-y-3"
       >
         <Controller
@@ -80,11 +72,11 @@ function Connexion() {
           type="submit"
           className="flex justify-center items-center h-[40px] text-red-600 font-bold border-2 border-red-600 rounded transition ease sm:hover:text-white sm:hover:bg-red-600"
         >
-          {!loading ? <>Connexion</> : <SmallLoader />}
+          {!loading ? <>Créer le compte</> : <SmallLoader />}
         </button>
       </form>
     </div>
   );
 }
 
-export default Connexion;
+export default CreateAccountForm;

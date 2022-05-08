@@ -7,6 +7,8 @@ const MongoDBSession = require("connect-mongodb-session")(session);
 
 const mongoDbConnection = require("./src/config/mongoDbConnection");
 const connexionRoute = require("./src/routes/connexionRoute");
+const createAccountRoute = require("./src/routes/createAccountRoute");
+const collaboratorsRoute = require("./src/routes/collaboratorsRoute");
 const PORT = process.env.PORT || 4000;
 
 const store = new MongoDBSession({
@@ -47,7 +49,24 @@ app.get("/", (req, res) => {
 });
 
 app.use(connexionRoute);
+app.use(createAccountRoute);
+app.use(collaboratorsRoute);
 
 app.listen(PORT, () => {
   console.log("server is running on port", PORT);
 });
+
+// app.post("/register", async (req, res) => {
+//   const { username, password } = req.body;
+
+//   const hashPassword = await bcrypt.hash(password, 10);
+
+//   const newUser = new User({
+//     username,
+//     password: hashPassword,
+//     role: "Director",
+//   });
+
+//   newUser.save();
+//   res.json({ status: "ok" });
+// });

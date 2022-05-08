@@ -1,12 +1,12 @@
 import * as Yup from "yup";
 
 const connexionValidationSchema = Yup.object({
-  id_number: Yup.string().required(
-    "Veuillez entrer votre numéro d'identifiant"
-  ),
+  username: Yup.string()
+    .min(3, "Ce nom est trop court")
+    .required("Veuillez entrer un nom d'utilisateur"),
   password: Yup.string()
     .min(6, "Ce mot de passe est trop court")
-    .required("Veuillez entrer votre mot de passe"),
+    .required("Veuillez entrer un mot de passe"),
 }).required();
 
 export default connexionValidationSchema;
