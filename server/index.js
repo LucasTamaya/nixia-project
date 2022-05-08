@@ -9,7 +9,9 @@ const mongoDbConnection = require("./src/config/mongoDbConnection");
 const connexionRoute = require("./src/routes/connexionRoute");
 const createAccountRoute = require("./src/routes/createAccountRoute");
 const collaboratorsRoute = require("./src/routes/collaboratorsRoute");
+const emailsRoute = require("./src/routes/emailsRoute");
 const PORT = process.env.PORT || 4000;
+const Email = require("./src/models/Email");
 
 const store = new MongoDBSession({
   uri: process.env.MONGODB_URI,
@@ -51,6 +53,26 @@ app.get("/", (req, res) => {
 app.use(connexionRoute);
 app.use(createAccountRoute);
 app.use(collaboratorsRoute);
+app.use(emailsRoute);
+
+app.post("/add-data", (req, res) => {
+  console.log(req.body);
+
+  const { from, object, body, assignTo, status, comments } = req.body;
+
+  const data = new Email({
+    from,
+    object,
+    body,
+    assignTo,
+    status,
+    comments,
+  });
+
+  data.save();
+
+  return res.json({ message: "Data enregistré" });
+});
 
 app.listen(PORT, () => {
   console.log("server is running on port", PORT);

@@ -19,20 +19,17 @@ const ConnexionController = async (req, res) => {
     return res.json({ errorMessage: "Mot de passe invalide" });
   }
 
-  if (user[0].role === "Director") {
+  if (user[0].role === "Directeur") {
     req.session.director = true;
   }
 
-  if (user[0].role === "Admin") {
+  if (user[0].role === "Administrateur") {
     req.session.admin = true;
   }
 
-  if (user[0].role === "Employee") {
+  if (user[0].role === "Employé") {
     req.session.employee = true;
   }
-
-  // console.log(user);
-  // console.log(req.session);
 
   return res.json({ successMessage: "Connexion réussie", role: user[0].role });
 };

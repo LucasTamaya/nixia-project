@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -36,15 +36,15 @@ function useConnexion(url) {
       setData(data.successMessage);
       let dashboardUrl;
 
-      if (data.role === "Director") {
+      if (data.role === "Directeur") {
         dashboardUrl = "/dashboard-directeur";
       }
 
-      if (data.role === "Admin") {
+      if (data.role === "Administrateur") {
         dashboardUrl = "/dashboard-administrateur";
       }
 
-      if (data.role === "Employee") {
+      if (data.role === "Employé") {
         dashboardUrl = "/dashboard-employe";
       }
       setTimeout(() => {

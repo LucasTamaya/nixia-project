@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 
-import apiEndpoint from "../helpers/apiEndpoint";
 import axiosInstance from "../helpers/axiosInstance";
 
+// Custom hook pour fetch de la data sans se répéter dans le code
 const useFetch = (url) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -21,11 +21,6 @@ const useFetch = (url) => {
     }
   };
 
-  return {
-    fetchData,
-    loading,
-    error,
-    data,
-  };
+  return [fetchData, loading, error, data];
 };
 export default useFetch;

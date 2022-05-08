@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import DoneIcon from "@mui/icons-material/Done";
 
 function SuccessMessage({ message }) {
