@@ -17,7 +17,16 @@ const QueryNonAssignEmails = async (req, res) => {
     return res.json({ errorMessage: "Must be admin to view this page" });
   }
 
-  const emails = await Email.find({ assignTo: "" });
+  const emails = await Email.find({ assignTo: [] });
+
+  return res.json(emails);
+};
+
+const QueryEmployeeEmails = async (req, res) => {
+  console.log(req.params);
+  const { username } = req.params;
+
+  const emails = await Email.find({ assignTo: username });
 
   return res.json(emails);
 };
@@ -34,13 +43,23 @@ const EmailAttribution = async (req, res) => {
     $set: { assignTo: assignEmployee },
   });
 
-  console.log(email);
+  return res.json({ successMessage: `Email attribué à ${assignEmployee}` });
+};
 
-  return res.json({ message: "email attribué !" });
+const EmailHandling = async (req, res) => {
+  const { emailId, emailStatus, comment } = req.body;
+
+  const email = await Email.findByIdAndUpdate(emailId, {
+    $set: { status: emailStatus, comment },
+  });
+
+  return res.json({ successMessage: "Email traité" });
 };
 
 module.exports = {
   QueryAllEmails,
   QueryNonAssignEmails,
+  QueryEmployeeEmails,
   EmailAttribution,
+  EmailHandling,
 };

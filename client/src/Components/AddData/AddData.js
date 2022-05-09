@@ -17,9 +17,9 @@ function AddData() {
         from: x.email,
         object: `Demande de devis ${i}`,
         body: "Bonjour, je souhaite avoir un devis pour les services que vous proposez.",
-        assignTo: "",
+        assignTo: [],
         status: "En cours",
-        comments: "",
+        comment: "",
       });
     });
   };

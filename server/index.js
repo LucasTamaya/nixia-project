@@ -58,7 +58,7 @@ app.use(emailsRoute);
 app.post("/add-data", (req, res) => {
   console.log(req.body);
 
-  const { from, object, body, assignTo, status, comments } = req.body;
+  const { from, object, body, assignTo, status, comment } = req.body;
 
   const data = new Email({
     from,
@@ -66,7 +66,7 @@ app.post("/add-data", (req, res) => {
     body,
     assignTo,
     status,
-    comments,
+    comment,
   });
 
   data.save();

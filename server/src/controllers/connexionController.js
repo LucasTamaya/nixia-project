@@ -31,7 +31,11 @@ const ConnexionController = async (req, res) => {
     req.session.employee = true;
   }
 
-  return res.json({ successMessage: "Connexion réussie", role: user[0].role });
+  return res.json({
+    successMessage: "Connexion réussie",
+    username: user[0].username,
+    role: user[0].role,
+  });
 };
 
 module.exports = ConnexionController;

@@ -6,9 +6,9 @@ const emailSchema = new Schema({
   from: String,
   object: String,
   body: String,
-  assignTo: String,
+  assignTo: [String],
   status: String,
-  comments: String,
+  comment: String,
 });
 
 module.exports = mongoose.models.Email || mongoose.model("Email", emailSchema);

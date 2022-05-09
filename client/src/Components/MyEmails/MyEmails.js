@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AutorenewOutlinedIcon from "@mui/icons-material/AutorenewOutlined";
 import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
@@ -9,17 +9,19 @@ import apiEndpoint from "../../helpers/apiEndpoint";
 import useFetch from "../../Hooks/useFetch";
 import LargeLoader from "../Loaders/LargeLoader/LargeLoader";
 import ErrorMessage from "../StatusMessage/ErrorMessage";
+import MailsHandling from "../MailsHandling/MailsHandling";
 
-function ListOfEmails() {
-  const [fetchData, loading, error, data] = useFetch(`${apiEndpoint}emails`);
+function MyEmails() {
+  const [showModal, setShowModal] = useState(false);
+  const [emailId, setEmailId] = useState("");
+
+  const [fetchData, loading, error, data] = useFetch(
+    `${apiEndpoint}employee-emails/${localStorage.getItem("username")}`
+  );
 
   useEffect(() => {
     fetchData();
   }, []);
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   if (loading) {
     return <LargeLoader />;
@@ -36,6 +38,13 @@ function ListOfEmails() {
           <div
             key={email._id}
             className="relative cursor-pointer p-2 border-b border-gray-600 transition ease hover:shadow-lg"
+            onClick={() => {
+              if (email.status !== "En cours") {
+                return;
+              }
+              setShowModal(true);
+              setEmailId(email._id);
+            }}
           >
             <div className="absolute top-0 right-0 flex items-center gap-x-1">
               {email.status === "En cours" && (
@@ -77,32 +86,14 @@ function ListOfEmails() {
             <p className="text-gray-600 font-bold">{email.from}</p>
             <p className="text-red-600 ">{email.object}</p>
             <p className="text-gray-600 ">{email.body}</p>
-            <div className="flex items-center gap-x-1 mt-1">
-              <ConnectWithoutContactOutlinedIcon
-                sx={{ fontSize: 15 }}
-                className="text-gray-600"
-              />
-              <p className="text-gray-600 font-bold text-xs">
-                Attribué à:{" "}
-                {email.assignTo.map((username) => (
-                  <span className="font-normal">{username}, </span>
-                ))}
-              </p>
-            </div>
-            <div className="flex items-center gap-x-1 mt-1">
-              <AssignmentOutlinedIcon
-                sx={{ fontSize: 15 }}
-                className="text-gray-600"
-              />
-              <p className="text-gray-600 font-bold text-xs">
-                Commentaire:{" "}
-                <span className="font-normal">{email.comment}</span>
-              </p>
-            </div>
           </div>
         ))}
+
+      {showModal && (
+        <MailsHandling emailId={emailId} setShowModal={setShowModal} />
+      )}
     </div>
   );
 }
 
-export default ListOfEmails;
+export default MyEmails;

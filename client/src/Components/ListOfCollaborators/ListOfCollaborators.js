@@ -6,7 +6,7 @@ import LargeLoader from "../Loaders/LargeLoader/LargeLoader";
 import ErrorMessage from "../StatusMessage/ErrorMessage";
 
 function ListOfCollaborators() {
-  const { fetchData, loading, error, data } = useFetch(
+  const [fetchData, loading, error, data] = useFetch(
     `${apiEndpoint}collaborators`
   );
 
@@ -31,7 +31,7 @@ function ListOfCollaborators() {
           data.map((collaborator) => (
             <div
               key={collaborator._id}
-              className="group w-full flex justify-between items-center border-2 border-gray-600 rounded p-2 cursor-pointer"
+              className="group w-full flex justify-between items-center border-2 border-gray-600 rounded p-2"
             >
               <p className="text-gray-600 transition ease group-hover:font-bold">
                 {collaborator.username}

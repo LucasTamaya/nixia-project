@@ -34,6 +34,9 @@ function useConnexion(url) {
 
       setLoading(false);
       setData(data.successMessage);
+
+      localStorage.setItem("username", data.username);
+
       let dashboardUrl;
 
       if (data.role === "Directeur") {
@@ -47,6 +50,7 @@ function useConnexion(url) {
       if (data.role === "Employé") {
         dashboardUrl = "/dashboard-employe";
       }
+      // redirige l'utilisateur vers son dashboard après 2 secondes pour voir le status message
       setTimeout(() => {
         navigate(dashboardUrl);
       }, 2000);

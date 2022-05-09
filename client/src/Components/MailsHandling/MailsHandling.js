@@ -7,31 +7,30 @@ import SuccessMessage from "../StatusMessage/SuccessMessage";
 import ErrorMessage from "../StatusMessage/ErrorMessage";
 import SmallLoader from "../Loaders/SmallLoader/SmallLoader";
 
-function EmailAttributionModal({ emailId, employees, setShowModal }) {
-  const [assignEmployee, setAssignEmployee] = useState([]);
+function MailsHandling({ emailId, setShowModal }) {
+  const [emailStatus, setEmailStatus] = useState("");
+  const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [data, setData] = useState("");
 
   useEffect(() => {
-    console.log(assignEmployee);
-  }, [assignEmployee]);
+    console.log(emailStatus);
+  }, [emailStatus]);
 
   const handleCheckBox = (e) => {
     if (!e.target.checked) {
-      setAssignEmployee((curr) =>
-        [...curr].filter((x) => x !== e.target.value)
-      );
+      setEmailStatus("");
     }
     if (e.target.checked) {
-      setAssignEmployee((curr) => [...curr, e.target.value]);
+      setEmailStatus(e.target.value);
     }
   };
 
   const handleForm = async (e) => {
     e.preventDefault();
 
-    if (assignEmployee.length === 0) {
+    if (!emailStatus) {
       return;
     }
 
@@ -39,10 +38,11 @@ function EmailAttributionModal({ emailId, employees, setShowModal }) {
 
     try {
       const { data } = await axiosInstance.post(
-        `${apiEndpoint}email-attribution`,
+        `${apiEndpoint}email-handling`,
         {
           emailId,
-          assignEmployee,
+          emailStatus,
+          comment,
         }
       );
       setData(data.successMessage);
@@ -62,7 +62,7 @@ function EmailAttributionModal({ emailId, employees, setShowModal }) {
 
       <div className="w-full max-w-[520px] bg-white rounded">
         <div className="w-full bg-red-600 flex justify-between items-center p-5 rounded-tl rounded-tr">
-          <p className="text-white text-lg">Attribué cet email à:</p>
+          <p className="text-white text-lg">Traité cet e-mail: </p>
           <CloseIcon
             className="text-white cursor-pointer"
             onClick={() => setShowModal(false)}
@@ -70,23 +70,45 @@ function EmailAttributionModal({ emailId, employees, setShowModal }) {
         </div>
 
         <form onSubmit={handleForm} className="flex flex-col gap-y-2 p-5">
-          {employees.map((employee) => (
-            <div key={employee._id} className="flex items-center gap-x-5">
-              <input
-                type="checkbox"
-                id={employee._id}
-                value={employee.username}
-                onClick={(e) => handleCheckBox(e)}
-              />
-              <label htmlFor={employee._id} className="cursor-pointer">
-                {employee.username}
-              </label>
+          <div className="flex justify-between items-center gap-x-5">
+            <div className="flex flex-col gap-y-2 p-5">
+              <div className="flex items-center gap-x-5">
+                <input
+                  type="radio"
+                  id="terminer"
+                  name="status"
+                  value="*TERMINER*"
+                  onClick={(e) => handleCheckBox(e)}
+                />
+                <label htmlFor="terminer" className="cursor-pointer">
+                  *TERMINER*
+                </label>
+              </div>
+              <div className="flex items-center gap-x-5">
+                <input
+                  type="radio"
+                  id="anuler"
+                  name="status"
+                  value="*ANNULER*"
+                  onClick={(e) => handleCheckBox(e)}
+                />
+                <label htmlFor="anuler" className="cursor-pointer">
+                  *ANNULER*
+                </label>
+              </div>
             </div>
-          ))}
+
+            <textarea
+              placeholder="Commentaire si nécessaire"
+              className="flex-1 text-gray-600 resize-none border border-gray-600 rounded h-[80px] p-2 outline-none"
+              onChange={(e) => setComment(e.target.value)}
+            ></textarea>
+          </div>
+
           <button
             type="submit"
             className={`${
-              assignEmployee.length === 0
+              !emailStatus
                 ? "border border-red-200 text-red-200 cursor-not-allowed"
                 : "border border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
             } font-bold h-[45px] flex justify-center items-center rounded px-3 mr-auto mt-2`}
@@ -99,4 +121,4 @@ function EmailAttributionModal({ emailId, employees, setShowModal }) {
   );
 }
 
-export default EmailAttributionModal;
+export default MailsHandling;
