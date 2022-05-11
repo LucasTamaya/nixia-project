@@ -1,7 +1,9 @@
 // Middleware afin de checker la validité du cookie de connexion de l'utilisateur
 const isAuth = (req, res, next) => {
   if (!req.session.isAuth) {
-    return res.json({ errorMessage: "Cookie invalide" });
+    return res.json({
+      errorMessage: "Session expirée, veuillez vous reconnecter",
+    });
   }
   next();
 };

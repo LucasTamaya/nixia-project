@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
 
 import axiosInstance from "../../helpers/axiosInstance";
 import apiEndpoint from "../../helpers/apiEndpoint";
@@ -8,6 +9,8 @@ import ErrorMessage from "../StatusMessage/ErrorMessage";
 import SmallLoader from "../Loaders/SmallLoader/SmallLoader";
 
 function MailsHandling({ emailId, setShowModal }) {
+  const navigate = useNavigate();
+
   const [emailStatus, setEmailStatus] = useState("");
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
@@ -45,6 +48,12 @@ function MailsHandling({ emailId, setShowModal }) {
           comment,
         }
       );
+
+      if (data.errorMessage) {
+        setError(data.errorMessage);
+        setLoading(false);
+      }
+
       setData(data.successMessage);
       setLoading(false);
     } catch (err) {
@@ -54,10 +63,15 @@ function MailsHandling({ emailId, setShowModal }) {
     }
   };
 
+  if (error) {
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
+    return <ErrorMessage message={error} />;
+  }
+
   return (
     <div className="fixed top-0 left-0 flex justify-center items-center w-full h-full bg-black/70 p-4">
-      {error && <ErrorMessage message={error} />}
-
       {data && <SuccessMessage message={data} />}
 
       <div className="w-full max-w-[520px] bg-white rounded">

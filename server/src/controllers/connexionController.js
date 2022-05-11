@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const passwordValidation = require("../helpers/passwordValidation");
 
-const ConnexionController = async (req, res) => {
+const LoginController = async (req, res) => {
   const { username, password } = req.body;
 
   const user = await User.find({ username });
@@ -45,6 +45,6 @@ const QueryUserRole = async (req, res) => {
 };
 
 module.exports = {
-  ConnexionController,
+  LoginController,
   QueryUserRole,
 };

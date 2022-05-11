@@ -13,7 +13,6 @@ const QueryNonAssignEmails = async (req, res) => {
 };
 
 const QueryEmployeeEmails = async (req, res) => {
-  console.log(req.params);
   const { username } = req.params;
 
   const emails = await Email.find({ assignTo: username });

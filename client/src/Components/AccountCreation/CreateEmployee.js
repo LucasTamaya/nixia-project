@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import apiEndpoint from "../../helpers/apiEndpoint";
 import useCreateAccount from "../../Hooks/useCreateAccount";

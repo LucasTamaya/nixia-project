@@ -1,5 +1,6 @@
 import * as Yup from "yup";
 
+// Schéma de validation afin de gérer les formulaires
 const connexionValidationSchema = Yup.object({
   username: Yup.string()
     .min(3, "Ce nom est trop court")

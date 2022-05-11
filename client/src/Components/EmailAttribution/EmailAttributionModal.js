@@ -68,8 +68,6 @@ function EmailAttributionModal({ emailId, employees, setShowModal }) {
 
   return (
     <div className="fixed top-0 left-0 flex justify-center items-center w-full h-full bg-black/70 p-4">
-      {error && <ErrorMessage message={error} />}
-
       {data && <SuccessMessage message={data} />}
 
       <div className="w-full max-w-[520px] bg-white rounded">

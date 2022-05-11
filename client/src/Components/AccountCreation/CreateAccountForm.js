@@ -9,6 +9,7 @@ import ErrorMessage from "../StatusMessage/ErrorMessage";
 import SuccessMessage from "../StatusMessage/SuccessMessage";
 
 function CreateAccountForm({ role, createAccount, loading, error, data }) {
+  // Elements afin de gérer le formulaire (erreurs etc.)
   const { control, handleSubmit } = useForm({
     resolver: yupResolver(connexionValidationSchema),
   });

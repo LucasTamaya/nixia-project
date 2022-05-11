@@ -1,6 +1,6 @@
 import React from "react";
-import LogoutIcon from "@mui/icons-material/Logout";
 import { useNavigate } from "react-router-dom";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 import nixiaLogo from "../../assets/img/nixia-logo.png";
 
@@ -23,7 +23,10 @@ function Header() {
               sx={{ fontSize: 20 }}
               className="text-red-600 transition group-hover:text-white"
             />
-            <span className="text-red-600 text-md md:text-lg transition group-hover:text-white">
+            <span
+              className="text-red-600 text-md md:text-lg transition group-hover:text-white"
+              onClick={() => navigate("/connexion")}
+            >
               Déconnexion
             </span>
           </div>

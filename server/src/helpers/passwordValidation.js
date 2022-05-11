@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 
+// Fonction afin de comparer des mots de passes
 const passwordValidation = async (user, password) => {
   const matchPasswords = await bcrypt.compare(password, user.password);
 

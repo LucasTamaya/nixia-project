@@ -20,8 +20,6 @@ function useCreateAccount(url) {
         password,
       });
 
-      console.log(data);
-
       if (data.errorMessage) {
         setError(data.errorMessage);
         setLoading(false);
@@ -31,10 +29,10 @@ function useCreateAccount(url) {
       setLoading(false);
       setData(data.successMessage);
       setTimeout(() => {
-        navigate("/dashboard");
+        navigate("/");
       }, 2000);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setError("Erreur inconnue, veuillez réessayer");
       setLoading(false);
     }

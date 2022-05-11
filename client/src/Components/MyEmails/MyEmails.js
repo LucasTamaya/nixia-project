@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AutorenewOutlinedIcon from "@mui/icons-material/AutorenewOutlined";
 import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
@@ -8,8 +9,11 @@ import useFetch from "../../Hooks/useFetch";
 import LargeLoader from "../Loaders/LargeLoader/LargeLoader";
 import MailsHandling from "../MailsHandling/MailsHandling";
 import Header from "../Header/Header";
+import ErrorMessage from "../StatusMessage/ErrorMessage";
 
 function MyEmails() {
+  const navigate = useNavigate();
+
   const [showModal, setShowModal] = useState(false);
   const [emailId, setEmailId] = useState("");
 
@@ -23,6 +27,14 @@ function MyEmails() {
 
   if (loading) {
     return <LargeLoader />;
+  }
+
+  if (error) {
+    setTimeout(() => {
+      navigate("/connexion");
+    }, 2000);
+
+    return <ErrorMessage message={error} />;
   }
 
   return (

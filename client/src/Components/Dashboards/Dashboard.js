@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import apiEndpoint from "../../helpers/apiEndpoint";
 import useFetch from "../../Hooks/useFetch";
 import LargeLoader from "../Loaders/LargeLoader/LargeLoader";
+import ErrorMessage from "../StatusMessage/ErrorMessage";
 import AdminDashboard from "./AdminDashboard";
 import DirectorDashboard from "./DirectorDashboard";
 import EmployeeDashboard from "./EmployeeDashboard";
@@ -20,14 +21,15 @@ function Dashboard() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (error === "Cookie invalide") {
-      navigate("/connexion");
-    }
-  }, [error]);
-
   if (loading) {
     return <LargeLoader />;
+  }
+
+  if (error) {
+    setTimeout(() => {
+      navigate("/connexion");
+    }, 2200);
+    return <ErrorMessage message={error} />;
   }
 
   if (data.role === "Directeur") {

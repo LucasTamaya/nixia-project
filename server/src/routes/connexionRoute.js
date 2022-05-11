@@ -4,11 +4,11 @@ const router = express.Router();
 const { isAuth } = require("../helpers/authMiddleware");
 
 const {
-  ConnexionController,
+  LoginController,
   QueryUserRole,
 } = require("../controllers/connexionController");
 
-router.post("/connexion", ConnexionController);
+router.post("/login", LoginController);
 router.get("/user-role/:username", isAuth, QueryUserRole);
 
 module.exports = router;

@@ -8,10 +8,6 @@ import ListOfEmails from "./Components/ListOfEmails/ListOfEmails";
 import EmailAttribution from "./Components/EmailAttribution/EmailAttribution";
 import MyEmails from "./Components/MyEmails/MyEmails";
 import Dashboard from "./Components/Dashboards/Dashboard";
-// import Register from "./Components/Register/Register";
-{
-  /* <Route path="/register" element={<Register />} /> */
-}
 
 function App() {
   return (
