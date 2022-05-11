@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+import Header from "../Header/Header";
+
 function AddData() {
   const [data, setData] = useState([]);
 
@@ -27,11 +29,14 @@ function AddData() {
   useEffect(() => {}, [data]);
 
   return (
-    <div>
-      <button className="border border-red-500" onClick={handleAddData}>
-        Add Data
-      </button>
-    </div>
+    <>
+      <Header />
+      <div>
+        <button className="border border-red-500" onClick={handleAddData}>
+          Add Data
+        </button>
+      </div>
+    </>
   );
 }
 

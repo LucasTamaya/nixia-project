@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
 
 import axiosInstance from "../../helpers/axiosInstance";
 import apiEndpoint from "../../helpers/apiEndpoint";
@@ -8,14 +9,12 @@ import ErrorMessage from "../StatusMessage/ErrorMessage";
 import SmallLoader from "../Loaders/SmallLoader/SmallLoader";
 
 function EmailAttributionModal({ emailId, employees, setShowModal }) {
+  const navigate = useNavigate();
+
   const [assignEmployee, setAssignEmployee] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [data, setData] = useState("");
-
-  useEffect(() => {
-    console.log(assignEmployee);
-  }, [assignEmployee]);
 
   const handleCheckBox = (e) => {
     if (!e.target.checked) {
@@ -45,6 +44,12 @@ function EmailAttributionModal({ emailId, employees, setShowModal }) {
           assignEmployee,
         }
       );
+
+      if (data.errorMessage) {
+        setError(data.errorMessage);
+        setLoading(false);
+      }
+
       setData(data.successMessage);
       setLoading(false);
     } catch (err) {
@@ -54,6 +59,13 @@ function EmailAttributionModal({ emailId, employees, setShowModal }) {
     }
   };
 
+  if (error) {
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
+    return <ErrorMessage message={error} />;
+  }
+
   return (
     <div className="fixed top-0 left-0 flex justify-center items-center w-full h-full bg-black/70 p-4">
       {error && <ErrorMessage message={error} />}
@@ -62,7 +74,7 @@ function EmailAttributionModal({ emailId, employees, setShowModal }) {
 
       <div className="w-full max-w-[520px] bg-white rounded">
         <div className="w-full bg-red-600 flex justify-between items-center p-5 rounded-tl rounded-tr">
-          <p className="text-white text-lg">Attribué cet email à:</p>
+          <p className="text-white text-lg">Attribuer cet e-mail à:</p>
           <CloseIcon
             className="text-white cursor-pointer"
             onClick={() => setShowModal(false)}

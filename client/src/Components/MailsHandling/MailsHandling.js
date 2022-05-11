@@ -62,7 +62,7 @@ function MailsHandling({ emailId, setShowModal }) {
 
       <div className="w-full max-w-[520px] bg-white rounded">
         <div className="w-full bg-red-600 flex justify-between items-center p-5 rounded-tl rounded-tr">
-          <p className="text-white text-lg">Traité cet e-mail: </p>
+          <p className="text-white text-lg">Traiter cet e-mail: </p>
           <CloseIcon
             className="text-white cursor-pointer"
             onClick={() => setShowModal(false)}

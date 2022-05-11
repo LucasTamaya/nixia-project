@@ -19,11 +19,8 @@ const ConnexionController = async (req, res) => {
     return res.json({ errorMessage: "Mot de passe invalide" });
   }
 
-  if (user[0].role === "Directeur") {
-    req.session.director = true;
-  }
-
-  if (user[0].role === "Administrateur") {
+  // Définit un type de cookie selon le role de l'utilisateur afin de controler l'accès à certaines pages
+  if (user[0].role === "Directeur" || user[0].role === "Administrateur") {
     req.session.admin = true;
   }
 
@@ -31,11 +28,23 @@ const ConnexionController = async (req, res) => {
     req.session.employee = true;
   }
 
+  req.session.isAuth = true;
+
   return res.json({
     successMessage: "Connexion réussie",
     username: user[0].username,
-    role: user[0].role,
   });
 };
 
-module.exports = ConnexionController;
+const QueryUserRole = async (req, res) => {
+  const { username } = req.params;
+
+  const user = await User.find({ username });
+
+  return res.json({ role: user[0].role });
+};
+
+module.exports = {
+  ConnexionController,
+  QueryUserRole,
+};

@@ -37,22 +37,9 @@ function useConnexion(url) {
 
       localStorage.setItem("username", data.username);
 
-      let dashboardUrl;
-
-      if (data.role === "Directeur") {
-        dashboardUrl = "/dashboard-directeur";
-      }
-
-      if (data.role === "Administrateur") {
-        dashboardUrl = "/dashboard-administrateur";
-      }
-
-      if (data.role === "Employé") {
-        dashboardUrl = "/dashboard-employe";
-      }
-      // redirige l'utilisateur vers son dashboard après 2 secondes pour voir le status message
+      // redirige l'utilisateur vers le dashboard après 2 secondes pour voir le "status message"
       setTimeout(() => {
-        navigate(dashboardUrl);
+        navigate("/");
       }, 2000);
     } catch (err) {
       console.log(err);
