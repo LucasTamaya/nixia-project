@@ -1,3 +1,3 @@
-const apiEndpoint = "http://localhost:4000/";
+const apiEndpoint = "https://nixia-project.herokuapp.com/";
 
 export default apiEndpoint;
