@@ -1,5 +1,6 @@
-const User = require("../models/User");
 const bcrypt = require("bcrypt");
+
+const User = require("../models/User");
 
 const CreateEmployee = async (req, res) => {
   console.log(req.body);

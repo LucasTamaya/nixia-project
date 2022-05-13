@@ -17,14 +17,13 @@ const store = new MongoDBSession({
   collection: "sessions",
 });
 
-module.exports = store;
-
 const app = express();
 
 app.use(express.json());
 
 app.use(
   cors({
+    origin: "https://nixia-project-lucastamaya.vercel.app",
     credentials: true,
   })
 );
@@ -54,5 +53,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log("server is running on port", PORT);
+  console.log("server now running on port", PORT);
 });

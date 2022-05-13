@@ -2,6 +2,8 @@ import { useState } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import axiosInstance from "../helpers/axiosInstance";
+
 function useCreateAccount(url) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -15,7 +17,7 @@ function useCreateAccount(url) {
     setData("");
 
     try {
-      const { data } = await Axios.post(url, {
+      const { data } = await axiosInstance.post(url, {
         username,
         password,
       });

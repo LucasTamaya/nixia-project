@@ -11,6 +11,12 @@ const isAuth = (req, res, next) => {
 // Middleware afin de checker la validité du cookie de connexion de l'utilisateur + son role en tant qu'admin/directeur
 const isAuthAsAdmin = (req, res, next) => {
   if (!req.session.isAuth) {
+    return res.json({
+      errorMessage: "Session expirée, veuillez vous reconnecter",
+    });
+  }
+
+  if (!req.session.admin) {
     return res.json({ errorMessage: "Accès refusé" });
   }
   next();

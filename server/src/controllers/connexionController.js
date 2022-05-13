@@ -19,6 +19,8 @@ const LoginController = async (req, res) => {
     return res.json({ errorMessage: "Mot de passe invalide" });
   }
 
+  console.log(user)
+
   // Définit un type de cookie selon le role de l'utilisateur afin de controler l'accès à certaines pages
   if (user[0].role === "Directeur" || user[0].role === "Administrateur") {
     req.session.admin = true;

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { isAuth } = require("../helpers/authMiddleware");
+// const { isAuth } = require("../helpers/authMiddleware");
 
 const {
   LoginController,
@@ -9,6 +9,6 @@ const {
 } = require("../controllers/connexionController");
 
 router.post("/login", LoginController);
-router.get("/user-role/:username", isAuth, QueryUserRole);
+router.get("/user-role/:username", QueryUserRole);
 
 module.exports = router;

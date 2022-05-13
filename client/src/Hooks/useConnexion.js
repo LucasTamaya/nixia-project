@@ -1,6 +1,7 @@
 import { useState } from "react";
-import Axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+import axiosInstance from "../helpers/axiosInstance";
 
 function useConnexion(url) {
   const [loading, setLoading] = useState(false);
@@ -15,14 +16,10 @@ function useConnexion(url) {
     setData("");
 
     try {
-      const { data } = await Axios.post(
-        url,
-        {
-          username,
-          password,
-        },
-        { withCredentials: true } // permet d'enregistrer le cookie lors de la connexion
-      );
+      const { data } = await axiosInstance.post(url, {
+        username,
+        password,
+      });
 
       console.log(data);
 

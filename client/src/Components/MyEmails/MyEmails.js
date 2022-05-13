@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AutorenewOutlinedIcon from "@mui/icons-material/AutorenewOutlined";
 import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 
 import apiEndpoint from "../../helpers/apiEndpoint";
 import useFetch from "../../Hooks/useFetch";
@@ -98,6 +99,16 @@ function MyEmails() {
               <p className="text-gray-600 font-bold">{email.from}</p>
               <p className="text-red-600 ">{email.object}</p>
               <p className="text-gray-600 ">{email.body}</p>
+              <div className="flex items-center gap-x-1 mt-1">
+                <AssignmentOutlinedIcon
+                  sx={{ fontSize: 20 }}
+                  className="text-red-600"
+                />
+                <p className="text-gray-600 font-bold text-sm">
+                  Commentaire:{" "}
+                  <span className="font-normal">{email.comment}</span>
+                </p>
+              </div>
             </div>
           ))}
 
